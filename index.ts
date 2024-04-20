@@ -1,15 +1,8 @@
 import { promises as fsPromises } from 'fs';
 import { IAMRolePolicy, PolicyDocument, Statement } from './types';
+import { isStringArray } from './utils';
 
 const path = './data.json';
-
-function isArrayOfType<T>(arr: any[], predicate: (value: any) => value is T): arr is T[] {
-  return Array.isArray(arr) && arr.every(predicate);
-}
-
-function isString(value: any): value is string {
-  return typeof value === 'string';
-}
 
 const readIAMPolicyFromJSONFile = async (filePath: string): Promise<IAMRolePolicy> => {
   const data = await fsPromises.readFile(filePath, { encoding: 'utf8' });
@@ -26,7 +19,7 @@ const verifyStatement = (statement: Statement): statement is Statement => {
     return false;
   }
 
-  if (!(typeof Resource === 'string' || isArrayOfType<string>(Resource, isString))) {
+  if (!(typeof Resource === 'string' || isStringArray(Resource))) {
     console.error('Resource must be a string or an array of strings');
     return false;
   }
@@ -36,7 +29,7 @@ const verifyStatement = (statement: Statement): statement is Statement => {
     return false;
   }
 
-  if (!(typeof Action === 'string' || isArrayOfType<string>(Action, isString))) {
+  if (!(typeof Action === 'string' || isStringArray(Action))) {
     console.error('Action must be a string or an array of strings');
     return false;
   }
@@ -45,8 +38,12 @@ const verifyStatement = (statement: Statement): statement is Statement => {
 };
 
 const verifyIAMPolicyProperties = (policyName: string, policyDocument: PolicyDocument): boolean => {
-  if (typeof policyName !== 'string' || typeof policyDocument !== 'object') {
+  if (typeof policyName !== 'string') {
     console.error('PolicyName must be a string');
+    return false;
+  }
+  if (typeof policyDocument !== 'object') {
+    console.error('PolicyDocument must be an object');
     return false;
   }
 

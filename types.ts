@@ -1,5 +1,5 @@
 export interface Statement {
-  Sid: string;
+  Sid?: string;
   Effect: 'Allow' | 'Deny';
   Action: string | string[];
   Resource: string | string[];
