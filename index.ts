@@ -2,8 +2,6 @@ import { promises as fsPromises } from 'fs';
 import { IAMRolePolicy, PolicyDocument, Statement } from './types';
 import { isArrayOfType, isString, isObject } from './utils';
 
-const path = './data.json';
-
 const readIAMPolicyFromJSONFile = async (filePath: string): Promise<IAMRolePolicy> => {
   const data = await fsPromises.readFile(filePath, { encoding: 'utf8' });
   const policy = JSON.parse(data);
@@ -86,9 +84,9 @@ const verifyPolicyDocument = (policyDocument: PolicyDocument): boolean => {
   return true;
 };
 
-export const validateIAMPolicy = async (filePath: string): Promise<boolean> => {
+export const validateIAMPolicy = (policy: IAMRolePolicy): boolean => {
   try {
-    const { PolicyName, PolicyDocument } = await readIAMPolicyFromJSONFile(filePath);
+    const { PolicyName, PolicyDocument } = policy;
 
     if (!verifyIAMPolicyName(PolicyName)) return false;
     if (!verifyPolicyDocument(PolicyDocument)) return false;
@@ -107,4 +105,10 @@ export const validateIAMPolicy = async (filePath: string): Promise<boolean> => {
   }
 };
 
-validateIAMPolicy(path).then((result) => console.log(result));
+const main = async () => {
+  const path = './data.json';
+  const policy = await readIAMPolicyFromJSONFile(path);
+  return validateIAMPolicy(policy);
+};
+
+main().then((result) => console.log(result));
