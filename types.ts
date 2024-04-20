@@ -1,16 +1,16 @@
-interface Statement {
+export interface Statement {
   Sid: string;
-  Effect: string | string[];
+  Effect: 'Allow' | 'Deny';
   Action: string | string[];
   Resource: string | string[];
 }
 
 interface PolicyDocument {
   Version: string;
-  Statement: Statement | Statement[];
+  Statement: Statement[];
 }
 
-export interface IAMPolicy {
+export interface IAMRolePolicy {
   PolicyName: string;
   PolicyDocument: PolicyDocument;
 }
