@@ -11,8 +11,13 @@ const readIAMPolicyFromJSONFile = async (filePath: string): Promise<IAMRolePolic
   return policy;
 };
 
-const verifyStatement = (statement: Statement): statement is Statement => {
-  const { Effect, Resource, Action } = statement;
+const verifyStatement = (statement: Statement): boolean => {
+  const { Sid, Effect, Resource, Action } = statement;
+
+  if (!(typeof Sid === 'string')) {
+    console.error('Sid must be a string or an array of strings');
+    return false;
+  }
 
   if (!(Effect === 'Allow' || Effect === 'Deny')) {
     console.error('Effect must be either Allow or Deny');
@@ -59,6 +64,11 @@ const verifyIAMPolicyProperties = (policyName: string, policyDocument: PolicyDoc
 
   if (!policyDocument) {
     console.error('PolicyDocument is required');
+    return false;
+  }
+
+  if (policyDocument.Version !== '2012-10-17' && policyDocument.Version !== '2008-10-17') {
+    console.error('Version must be either 2012-10-17 or 2008-10-17');
     return false;
   }
 

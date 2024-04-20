@@ -6,7 +6,7 @@ export interface Statement {
 }
 
 export interface PolicyDocument {
-  Version: string;
+  Version: '2012-10-17' | '2008-10-17';
   Statement: Statement[];
 }
 
