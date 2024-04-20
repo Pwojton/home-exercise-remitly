@@ -15,7 +15,7 @@ const verifyStatement = (statement: Statement): boolean => {
   const { Sid, Effect, Resource, Action } = statement;
 
   if (!(typeof Sid === 'string')) {
-    console.error('Sid must be a string or an array of strings');
+    console.error('Sid must be a string');
     return false;
   }
 
@@ -42,13 +42,9 @@ const verifyStatement = (statement: Statement): boolean => {
   return true;
 };
 
-const verifyIAMPolicyProperties = (policyName: string, policyDocument: PolicyDocument): boolean => {
+const verifyIAMPolicyName = (policyName: string): boolean => {
   if (typeof policyName !== 'string') {
     console.error('PolicyName must be a string');
-    return false;
-  }
-  if (typeof policyDocument !== 'object') {
-    console.error('PolicyDocument must be an object');
     return false;
   }
 
@@ -59,6 +55,15 @@ const verifyIAMPolicyProperties = (policyName: string, policyDocument: PolicyDoc
   }
   if (policyName.length < 1 || policyName.length > 128) {
     console.error('PolicyName must be between 1 and 128 characters long');
+    return false;
+  }
+
+  return true;
+};
+
+const verifyPolicyDocument = (policyDocument: PolicyDocument): boolean => {
+  if (typeof policyDocument !== 'object') {
+    console.error('PolicyDocument must be an object');
     return false;
   }
 
@@ -79,7 +84,8 @@ export const validateIAMPolicy = async (filePath: string): Promise<boolean> => {
   try {
     const { PolicyName, PolicyDocument } = await readIAMPolicyFromJSONFile(filePath);
 
-    if (!verifyIAMPolicyProperties(PolicyName, PolicyDocument)) return false;
+    if (!verifyIAMPolicyName(PolicyName)) return false;
+    if (!verifyPolicyDocument(PolicyDocument)) return false;
 
     const { Statement } = PolicyDocument;
 
