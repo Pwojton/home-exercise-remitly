@@ -9,7 +9,7 @@ const readIAMPolicyFromJSONFile = async (filePath: string): Promise<IAMRolePolic
   return policy;
 };
 
-const verifyStatement = (statement: Statement): boolean => {
+export const verifyStatement = (statement: Statement): boolean => {
   const { Sid, Effect, Resource, Action } = statement;
 
   if (!isString(Sid)) {
@@ -40,7 +40,7 @@ const verifyStatement = (statement: Statement): boolean => {
   return true;
 };
 
-const verifyIAMPolicyName = (policyName: string): boolean => {
+export const verifyIAMPolicyName = (policyName: string): boolean => {
   if (!isString(policyName)) {
     console.error('PolicyName must be a string');
     return false;

@@ -1,12 +1,12 @@
 export interface Statement {
   Sid?: string;
-  Effect: 'Allow' | 'Deny';
+  Effect: string;
   Action: string | string[];
   Resource: string | string[];
 }
 
 export interface PolicyDocument {
-  Version: '2012-10-17' | '2008-10-17';
+  Version: string;
   Statement: Statement[];
 }
 
