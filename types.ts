@@ -5,7 +5,7 @@ export interface Statement {
   Resource: string | string[];
 }
 
-interface PolicyDocument {
+export interface PolicyDocument {
   Version: string;
   Statement: Statement[];
 }
