@@ -1,6 +1,6 @@
 import { promises as fsPromises } from 'fs';
 import { IAMRolePolicy, PolicyDocument, Statement } from './types';
-import { isStringArray } from './utils';
+import { isArrayOfType, isString, isObject } from './utils';
 
 const path = './data.json';
 
@@ -14,7 +14,7 @@ const readIAMPolicyFromJSONFile = async (filePath: string): Promise<IAMRolePolic
 const verifyStatement = (statement: Statement): boolean => {
   const { Sid, Effect, Resource, Action } = statement;
 
-  if (!(typeof Sid === 'string')) {
+  if (!isString(Sid)) {
     console.error('Sid must be a string');
     return false;
   }
@@ -24,7 +24,7 @@ const verifyStatement = (statement: Statement): boolean => {
     return false;
   }
 
-  if (!(typeof Resource === 'string' || isStringArray(Resource))) {
+  if (!(isString(Resource) || isArrayOfType<string>(Resource, isString))) {
     console.error('Resource must be a string or an array of strings');
     return false;
   }
@@ -34,7 +34,7 @@ const verifyStatement = (statement: Statement): boolean => {
     return false;
   }
 
-  if (!(typeof Action === 'string' || isStringArray(Action))) {
+  if (!(isString(Action) || isArrayOfType<string>(Action, isString))) {
     console.error('Action must be a string or an array of strings');
     return false;
   }
@@ -43,7 +43,7 @@ const verifyStatement = (statement: Statement): boolean => {
 };
 
 const verifyIAMPolicyName = (policyName: string): boolean => {
-  if (typeof policyName !== 'string') {
+  if (!isString(policyName)) {
     console.error('PolicyName must be a string');
     return false;
   }
@@ -62,18 +62,24 @@ const verifyIAMPolicyName = (policyName: string): boolean => {
 };
 
 const verifyPolicyDocument = (policyDocument: PolicyDocument): boolean => {
-  if (typeof policyDocument !== 'object') {
-    console.error('PolicyDocument must be an object');
-    return false;
-  }
-
   if (!policyDocument) {
     console.error('PolicyDocument is required');
     return false;
   }
 
-  if (policyDocument.Version !== '2012-10-17' && policyDocument.Version !== '2008-10-17') {
+  if (!isObject(policyDocument)) {
+    console.error('PolicyDocument must be an object');
+    return false;
+  }
+
+  const { Version, Statement } = policyDocument;
+  if (Version !== '2012-10-17' && Version !== '2008-10-17') {
     console.error('Version must be either 2012-10-17 or 2008-10-17');
+    return false;
+  }
+
+  if (!isArrayOfType<object>(Statement, isObject)) {
+    console.error('Statement must be an array of objects');
     return false;
   }
 
