@@ -7,7 +7,7 @@ describe('verifyStatement', () => {
       Sid: 'IamListAccess',
       Effect: 'Allow',
       Action: ['iam:ListRoles', 'iam:ListUsers'],
-      Resource: 'test',
+      Resource: ['test', 'test'],
     };
     expect(verifyStatement(properStatement)).toBe(true);
   });

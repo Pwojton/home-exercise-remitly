@@ -12,6 +12,12 @@ describe('verifyIAMPolicyDocument', () => {
           Action: ['iam:ListRoles', 'iam:ListUsers'],
           Resource: '*',
         },
+        {
+          Sid: 'IamListAccess',
+          Effect: 'Allow',
+          Action: ['iam:ListRoles', 'iam:ListUsers'],
+          Resource: '*',
+        },
       ],
     };
     const policyDocumentWithStar: PolicyDocument = {
