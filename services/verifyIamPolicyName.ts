@@ -15,7 +15,7 @@ export const verifyIamPolicyName = (policyName: string): boolean => {
    * PolicyName can only contain the following special characters: + = , . @ -
    * Example:
    *  Proper name: root-1.2
-   *  Unproper name: root*<root>
+   *  Incorrect name: root*<root>
    */
   const policyNamePattern = /^[\w+=,.@-]+$/;
   if (!policyNamePattern.test(policyName)) {

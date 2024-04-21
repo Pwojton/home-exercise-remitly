@@ -2,8 +2,8 @@ import { PolicyDocument } from '../types';
 import { verifyPolicyDocument } from './verifyPolicyDocument';
 
 describe('verifyIAMPolicyDocument', () => {
-  it('should return ture when proper policy document is pased', () => {
-    const properPolicyDocumen: PolicyDocument = {
+  it('should return true when proper policy document is passed', () => {
+    const properPolicyDocument: PolicyDocument = {
       Version: '2012-10-17',
       Statement: [
         {
@@ -25,7 +25,7 @@ describe('verifyIAMPolicyDocument', () => {
         },
       ],
     };
-    expect(verifyPolicyDocument(properPolicyDocumen)).toBe(true);
+    expect(verifyPolicyDocument(properPolicyDocument)).toBe(true);
     expect(verifyPolicyDocument(policyDocumentWithStar)).toBe(true);
   });
 

@@ -12,7 +12,7 @@ describe('verifyStatement', () => {
     expect(verifyStatement(properStatement)).toBe(true);
   });
 
-  it('should return false when staement with Resiurce * is passed', () => {
+  it('should return false when statement with Resource * is passed', () => {
     const statementWithStar: Statement = {
       Sid: 'IamListAccess',
       Effect: 'Allow',
