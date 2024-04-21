@@ -1,6 +1,5 @@
 import { promises as fsPromises } from 'fs';
 import { IamRolePolicy } from './types';
-
 import { validateIamPolicy } from './services/validateIamPolicy';
 
 const readIamPolicyFromJsonFile = async (filePath: string): Promise<IamRolePolicy | false> => {
@@ -17,8 +16,8 @@ const main = async () => {
   const path = './data.json';
   const policy = await readIamPolicyFromJsonFile(path);
   if (!policy) return false;
+
   return validateIamPolicy(policy);
 };
 
 main().then((result) => console.log(result));
-export { validateIamPolicy };

@@ -6,6 +6,11 @@ import { verifyStatement } from './verifyStatement';
 export const validateIamPolicy = (policy: IamRolePolicy): boolean => {
   const { PolicyName, PolicyDocument } = policy;
 
+  if (!PolicyName || !PolicyDocument) {
+    console.error('PolicyName and PolicyDocument are required');
+    return false;
+  }
+
   if (!verifyIamPolicyName(PolicyName)) return false;
   if (!verifyPolicyDocument(PolicyDocument)) return false;
 

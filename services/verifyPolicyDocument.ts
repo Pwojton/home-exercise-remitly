@@ -2,11 +2,6 @@ import { PolicyDocument } from '../types';
 import { isArrayOfType, isObject } from '../utils';
 
 export const verifyPolicyDocument = (policyDocument: PolicyDocument): boolean => {
-  if (!policyDocument) {
-    console.error('PolicyDocument is required');
-    return false;
-  }
-
   if (!isObject(policyDocument)) {
     console.error('PolicyDocument must be an object');
     return false;
