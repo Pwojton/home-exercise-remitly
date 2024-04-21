@@ -1,11 +1,11 @@
-export function isArrayOfType<T>(arr: any[], predicate: (value: any) => value is T): arr is T[] {
+export function isArrayOfType<T>(arr: unknown[], predicate: (value: unknown) => value is T): arr is T[] {
   return Array.isArray(arr) && arr.every(predicate);
 }
 
-export function isString(value: any): value is string {
+export function isString(value: unknown): value is string {
   return typeof value === 'string';
 }
 
-export function isObject(value: any): value is object {
+export function isObject(value: unknown): value is object {
   return typeof value === 'object';
 }
