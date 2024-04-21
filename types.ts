@@ -10,7 +10,7 @@ export interface PolicyDocument {
   Statement: Statement[];
 }
 
-export interface IAMRolePolicy {
+export interface IamRolePolicy {
   PolicyName: string;
   PolicyDocument: PolicyDocument;
 }

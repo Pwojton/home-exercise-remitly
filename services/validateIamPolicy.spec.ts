@@ -1,23 +1,4 @@
-import { validateIAMPolicy, verifyIAMPolicyName } from './index';
-
-describe('verifyIAMPolicyName', () => {
-  it('assert if true is returned when proper name is passed', () => {
-    expect(verifyIAMPolicyName('root')).toBe(true);
-  });
-
-  it('assert if false is returned when name is to long or to short', () => {
-    expect(verifyIAMPolicyName('')).toBe(false);
-    expect(
-      verifyIAMPolicyName(
-        'rootrootroootrootroootrootroootrootroootrootroootroootrootroootrootroootrootroootrootroootrootroootrootroootrootroootrootroootrootroootrootroootrootrooot'
-      )
-    ).toBe(false);
-  });
-
-  it('assert if false is returned when name with special characters is passed', () => {
-    expect(verifyIAMPolicyName('ro#o$t!@')).toBe(false);
-  });
-});
+import { validateIamPolicy } from './validateIamPolicy';
 
 describe('validateIAMPolicy', () => {
   it('assert if true is returned when proper data is passed', () => {
@@ -35,7 +16,7 @@ describe('validateIAMPolicy', () => {
         ],
       },
     };
-    expect(validateIAMPolicy(properData)).toBe(true);
+    expect(validateIamPolicy(properData)).toBe(true);
   });
 
   it('assert if false is returned when data with * in Resources is passed', () => {
@@ -53,7 +34,7 @@ describe('validateIAMPolicy', () => {
         ],
       },
     };
-    expect(validateIAMPolicy(dataWithStarResource)).toBe(false);
+    expect(validateIamPolicy(dataWithStarResource)).toBe(false);
   });
 
   it('assert if false is returned when data with wrong policy document version is passed', () => {
@@ -71,8 +52,6 @@ describe('validateIAMPolicy', () => {
         ],
       },
     };
-    expect(validateIAMPolicy(dataWithStarResource)).toBe(false);
+    expect(validateIamPolicy(dataWithStarResource)).toBe(false);
   });
 });
-
-export {};
