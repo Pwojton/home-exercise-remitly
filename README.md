@@ -1,15 +1,15 @@
-# Template 
+# Template
 
 ## Setup
 
 ### Installing
 
-`npm install` or `yarn`
+`npm install`
 
 ### Running
 
-`npm start` or `yarn start`
+`npm start`
 
 ### Testing
 
-`npm test` or `yarn test`
+`npm test`
