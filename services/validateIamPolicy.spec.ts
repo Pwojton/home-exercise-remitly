@@ -1,7 +1,7 @@
 import { validateIamPolicy } from './validateIamPolicy';
 
 describe('validateIAMPolicy', () => {
-  it('assert if true is returned when proper data is passed', () => {
+  it('should returne true when proper data is passed', () => {
     const properData = {
       PolicyName: 'root',
       PolicyDocument: {
@@ -19,7 +19,7 @@ describe('validateIAMPolicy', () => {
     expect(validateIamPolicy(properData)).toBe(true);
   });
 
-  it('assert if false is returned when data with * in Resources is passed', () => {
+  it('should returne flase when data with * in Resources is passed', () => {
     const dataWithStarResource = {
       PolicyName: 'root',
       PolicyDocument: {
@@ -37,7 +37,7 @@ describe('validateIAMPolicy', () => {
     expect(validateIamPolicy(dataWithStarResource)).toBe(false);
   });
 
-  it('assert if false is returned when data with wrong policy document version is passed', () => {
+  it('should returne flase when data with wrong policy document version is passed', () => {
     const dataWithStarResource = {
       PolicyName: 'root',
       PolicyDocument: {
